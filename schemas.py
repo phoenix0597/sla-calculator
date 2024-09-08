@@ -1,37 +1,44 @@
 # schemas.py
 # Создание схемы данных (описание Pydantic-моделей) для SQLAlchemy
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from enum import Enum
 
-class ServiceStatus(str, Enum):
-    WORKING = "working"
-    NOT_WORKING = "not working"
-    UNSTABLE = "unstable"
+# class ServiceStatus(str, Enum):
+class ServiceStatusSchema(str, Enum):
+    WORKING = "WORKING"
+    NOT_WORKING = "NOT_WORKING"
+    UNSTABLE = "UNSTABLE"
 
-class ServiceCreate(BaseModel):
+class ServiceCreateSchema(BaseModel):
     name: str
     description: str
 
-class ServiceStatusHistoryResponse(BaseModel):
-    status: ServiceStatus
+class ServiceStatusHistoryResponseSchema(BaseModel):
+    status: ServiceStatusSchema
     timestamp: datetime
     # для создания экземпляров модели из объектов, у которых атрибуты соответствуют полям модели
     model_config = ConfigDict(from_attributes=True)
 
-class ServiceResponse(BaseModel):
+class ServiceStatusCreateSchema(BaseModel):
+    status: ServiceStatusSchema
+
+class ServiceResponseSchema(BaseModel):
     name: str
     description: str
-    current_status: ServiceStatus
+    # current_status: ServiceStatus
+    current_status: Optional[str] = None
     model_config = ConfigDict(from_attributes=True)
 
-class ServiceHistoryResponse(BaseModel):
+class ServiceHistoryResponseSchema(BaseModel):
     name: str
     description: str
-    history: list[ServiceStatusHistoryResponse]
+    history: list[ServiceStatusHistoryResponseSchema]
     model_config = ConfigDict(from_attributes=True)
 
-class SLACalculationResponse(BaseModel):
+class SLACalculationResponseSchema(BaseModel):
+    total_time: float
     total_downtime: float
     sla_percentage: float

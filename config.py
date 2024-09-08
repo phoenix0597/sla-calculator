@@ -1,5 +1,5 @@
 # settings.py
-from pathlib import Path
+# from pathlib import Path
 from pydantic import ConfigDict, model_validator
 from pydantic_settings import BaseSettings
 
@@ -13,8 +13,11 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def get_database_url(self):
-        self.DB_URL = "postgresql+asyncpg://self.DB_USER:self.DB_PASSWORD@self.DB_HOST:DB_PORT/self.DB_NAME"
-        return self.DB_URL
+        self.DB_URL = (
+            f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}"
+            f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        )
+        return self
 
     model_config = ConfigDict(env_file=".env")
 
