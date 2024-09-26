@@ -5,10 +5,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from dependency import get_db
-from schemas import (ServiceResponseSchema, ServiceCreateSchema, ServiceStatusHistoryResponseSchema,
+from app.dependency import get_db
+from app.schemas import (ServiceResponseSchema, ServiceCreateSchema, ServiceStatusHistoryResponseSchema,
                      SLACalculationResponseSchema, ServiceHistoryResponseSchema, ServiceStatusSchema)
-from models import Service, ServiceStatusHistory, ServiceStatus
+from app.models import Service, ServiceStatusHistory, ServiceStatus
 
 router = APIRouter(
     prefix="/services",
