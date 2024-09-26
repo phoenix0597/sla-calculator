@@ -2,6 +2,12 @@
 # from pathlib import Path
 from pydantic import ConfigDict, model_validator
 from pydantic_settings import BaseSettings
+import os
+
+from pydantic_settings.sources import ENV_FILE_SENTINEL
+
+BASEDIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ENV_FILE: str = os.path.join(BASEDIR, ".env")
 
 class Settings(BaseSettings):
     DB_HOST: str
@@ -19,7 +25,7 @@ class Settings(BaseSettings):
         )
         return self
 
-    model_config = ConfigDict(env_file=".env")
+    model_config = ConfigDict(env_file=ENV_FILE)
 
 
 settings = Settings()

@@ -3,8 +3,8 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
-from database import async_session_maker, init_db
-from routers import router
+from app.database import async_session_maker, init_db
+from app.routers import router
 
 
 @asynccontextmanager
